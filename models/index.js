@@ -12,7 +12,6 @@ fs.readdirSync(__dirname)
 .filter(directoryItem => (directoryItem.indexOf('.') !== 0) && (directoryItem !== basename))
 .forEach(directoryItem => {
   const model = sequelize['import'](path.join(__dirname, `${directoryItem}/index.js`));
-  console.log(model);
   db[model.name] = model;
 });
 

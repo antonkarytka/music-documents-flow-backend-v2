@@ -1,15 +1,17 @@
 const { DataTypes } = require('sequelize');
-
-const { TABLE_NAME, ROLE } = require('../constants');
+const { TABLE_NAME } = require('../constants');
 
 const DEFINITION_OBJECT = {
   id: {type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4},
-  name: {type: DataTypes.ENUM([ROLE.ADMIN, ROLE.USER]), allowNull: false, defaultValue: ROLE.USER}
+  firstName: {type: DataTypes.STRING, allowNull: false},
+  lastName: {type: DataTypes.STRING, allowNull: false}
 };
 
 const CONFIGURATION_OBJECT = {
   tableName: TABLE_NAME,
-  timestamps: false
+  indexes: [{
+    fields: ['labelId']
+  }]
 };
 
 

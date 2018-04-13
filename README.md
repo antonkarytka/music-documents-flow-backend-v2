@@ -7,7 +7,8 @@
 3) Install [**node.js**](https://nodejs.org/en/) of version 8 or higher:
 4) Navigate to project's folder.
 5) Create ```/config/config.json``` file with the contents below.<br>
-Change _<DATABASE_USERNAME>_ and _<DATABASE_PASSWORD>_ to your database credentials.
+Change _<DATABASE_USERNAME>_ and _<DATABASE_PASSWORD>_ to your database credentials.<br>
+If you don't want to see SQL logs in terminal remove _"logging": true_ line from the contents below.
 ```
 {
   "development": {

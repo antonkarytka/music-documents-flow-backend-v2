@@ -1,5 +1,3 @@
-const { DEFINITION_OBJECT: ARTIST_DEFINITION_OBJECT } = require('../../../models/artist/schema');
-
 module.exports = {
   id: {
     in: ['body'],

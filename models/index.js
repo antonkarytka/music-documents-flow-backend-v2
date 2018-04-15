@@ -41,7 +41,7 @@ setTimeout(() => {
           .map(modelNamePart => _upperFirst(modelNamePart))
           .join('');
 
-        Object.assign(db[modelName], methods);
+        db[modelName] && Object.assign(db[modelName], methods);
       }
     });
 });

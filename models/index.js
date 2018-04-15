@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const { lowerFirst: _lowerFirst } = require('lodash');
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config.json')[env];
@@ -20,6 +22,18 @@ Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
+});
+
+// Add methods to models. Pull from execution to allow all models to be added to db object.
+// As other models may also be used in this model's methods.
+setTimeout(() => {
+  Object.keys(db).forEach(modelName => {
+    const methods = fs.existsSync(path.join(__dirname, `${_lowerFirst(modelName)}/methods/index.js`))
+      ? require(path.join(__dirname, `${_lowerFirst(modelName)}/methods/index.js`))
+      : null;
+
+    Object.assign(db[modelName], methods);
+  })
 });
 
 db.sequelize = sequelize;

@@ -1,7 +1,5 @@
-const Promise = require('bluebird');
 const express = require('express');
 const router = express.Router();
-const LabelMethods = require('./methods')
 const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
@@ -10,7 +8,7 @@ const VALIDATION_SCHEMAS = require('./validation-schemas');
 
 router.get('/', [
   (req, res) => {
-    return LabelMethods.fetchAll()
+    return models.Label.fetchAll()
     .then(labels => res.status(200).json(labels))
     .catch(err => res.status(400).json({errors: err }))
   }
@@ -23,7 +21,7 @@ router.get('/:labelId', [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
-    return LabelMethods.fetchById(req.params.labelId)
+    return models.Label.fetchById(req.params.labelId)
     .then(label => res.status(200).json(label))
     .catch(err => res.status(400).json({errors: err }))
   }
@@ -36,7 +34,7 @@ router.post('/', [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
-    return LabelMethods.createOne(req.body)
+    return models.Label.createOne(req.body)
     .then(label => res.status(200).json(label))
     .catch(err => res.status(400).json({errors: err }))
   }
@@ -49,7 +47,7 @@ router.put('/', [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
-    return LabelMethods.updateOne({id: req.body.id}, req.body)
+    return models.Label.updateOne({id: req.body.id}, req.body)
     .then(label => res.status(200).json(label))
     .catch(err => res.status(400).json({errors: err }))
   }

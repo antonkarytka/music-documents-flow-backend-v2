@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const { lowerFirst: _lowerFirst } = require('lodash');
+const { upperFirst: _upperFirst, reduce: _reduce } = require('lodash');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
@@ -11,11 +11,11 @@ const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs.readdirSync(__dirname)
-.filter(directoryItem => (directoryItem.indexOf('.') !== 0) && (directoryItem !== basename))
-.forEach(directoryItem => {
-  const model = sequelize['import'](path.join(__dirname, `${directoryItem}/index.js`));
-  db[model.name] = model;
-});
+  .filter(directoryItem => (directoryItem.length > 0 && directoryItem.indexOf('.') !== 0 && directoryItem !== basename))
+  .forEach(directoryItem => {
+    const model = sequelize['import'](path.join(__dirname, `${directoryItem}/index.js`));
+    db[model.name] = model;
+  });
 
 // Establish relations
 Object.keys(db).forEach(modelName => {
@@ -27,13 +27,23 @@ Object.keys(db).forEach(modelName => {
 // Add methods to models. Pull from execution to allow all models to be added to db object.
 // As other models may also be used in this model's methods.
 setTimeout(() => {
-  Object.keys(db).forEach(modelName => {
-    const methods = fs.existsSync(path.join(__dirname, `${_lowerFirst(modelName)}/methods/index.js`))
-      ? require(path.join(__dirname, `${_lowerFirst(modelName)}/methods/index.js`))
-      : null;
+  fs.readdirSync(__dirname)
+    .filter(directoryItem => (directoryItem.length > 0 && directoryItem.indexOf('.') !== 0 && directoryItem !== basename))
+    .forEach(directoryItem => {
+      const methods = fs.existsSync(path.join(__dirname, `${directoryItem}/methods/index.js`))
+        ? require(path.join(__dirname, `${directoryItem}/methods/index.js`))
+        : null;
 
-    Object.assign(db[modelName], methods);
-  })
+      if (methods) {
+        const modelName = directoryItem
+          .split('-')
+          .filter(modelNamePart => modelNamePart !== '-')
+          .map(modelNamePart => _upperFirst(modelNamePart))
+          .join('');
+
+        Object.assign(db[modelName], methods);
+      }
+    });
 });
 
 db.sequelize = sequelize;

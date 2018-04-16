@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const bcrypt = require('bcrypt');
 
 const models = require('../../index');
-const generateToken = require('../../../helpers/token-generator');
+const { generateToken } = require('../../../helpers/tokens');
 
 
 const fetchById = (id, options = {}) => {
@@ -19,6 +19,14 @@ const fetchAll = (options = {}) => {
 };
 
 
+const updateOne = (where, content, options = {}) => {
+  return models.sequelize.transaction(transaction => {
+    return models.User.update(content, {where, transaction, ...options})
+    .then(() => models.User.findById(content.id, {transaction}))
+  })
+};
+
+
 const logIn = ({email, password}, options = {}) => {
   return models.User.find({where: {email}, ...options})
   .then(user => {
@@ -27,10 +35,7 @@ const logIn = ({email, password}, options = {}) => {
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) return Promise.reject(`Provided password doesn't match the real one.`);
 
-    return {
-      user,
-      token: generateToken(user.id)
-    }
+    return { user, token: generateToken({userId: user.id}) }
   })
 };
 
@@ -48,14 +53,6 @@ const signUp = (content, options = {}) => {
       .then(createdUser => Promise.resolve(Object.assign(createdUser, {plainPassword: content.password})))
     })
     .then(({email, plainPassword}) => logIn({email, password: plainPassword}, {transaction, ...options}))
-  })
-};
-
-
-const updateOne = (where, content, options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.User.update(content, {where, transaction, ...options})
-    .then(() => models.User.findById(content.id, {transaction}))
   })
 };
 

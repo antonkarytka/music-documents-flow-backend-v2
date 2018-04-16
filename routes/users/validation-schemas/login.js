@@ -7,6 +7,6 @@ module.exports = {
   password: {
     in: ['body'],
     isString: true,
-    errorMessage: 'User\'s \'passport\' property is required.'
+    errorMessage: 'User\'s \'password\' property is required.'
   }
 };

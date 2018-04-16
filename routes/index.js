@@ -6,5 +6,6 @@ router.use('/artists', require('./artists'));
 router.use('/event-logs', require('./event-logs'));
 router.use('/labels', require('./labels'));
 router.use('/songs', require('./songs'));
+router.use('/users', require('./users'));
 
 module.exports = router;

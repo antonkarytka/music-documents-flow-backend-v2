@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const models = require('../models');
 
-passport.use(new Strategy((email, password, done) => {
+passport.use(new Strategy({usernameField: 'email', session: false}, (email, password, done) => {
   return models.User.find({where: {email}})
   .then(user => {
     if (!user) return done(null, false);

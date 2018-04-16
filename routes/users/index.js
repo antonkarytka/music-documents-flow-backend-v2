@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('../../helpers/passport');
 const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
-const passport = require('../../helpers/passport');
-
+const generateToken = require('../../helpers/token-generator');
 
 router.get('/', [
   (req, res) => {
@@ -31,15 +31,14 @@ router.get('/:userId', [
 
 router.post('/login', [
   checkSchema(VALIDATION_SCHEMAS.LOG_IN),
-
-  (req, res) => {
+  (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
-
-    return models.User.logIn(req.body)
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(400).json({errors: err }))
-  }
+    else next();
+  },
+  passport.authenticate('local', {session: false}),
+  generateToken,
+  (req, res, next) => res.status(200).json({user: req.user, token: req.token})
 ]);
 
 
@@ -49,7 +48,7 @@ router.post('/signup', [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
-    return models.User.signUp({id: req.body.id}, req.body)
+    return models.User.signUp(req.body, req.body)
     .then(user => res.status(200).json(user))
     .catch(err => res.status(400).json({errors: err }))
   }

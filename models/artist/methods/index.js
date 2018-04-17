@@ -14,7 +14,8 @@ const fetchById = (id, options = {}) => {
         },
         {
           model: models.Song,
-          as: 'songs'
+          as: 'songs',
+          through: {attributes: []} // remove junction table from result
         }
       ],
       ...options

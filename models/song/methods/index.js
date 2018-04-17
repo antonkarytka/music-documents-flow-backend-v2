@@ -9,7 +9,8 @@ const fetchById = (id, options = {}) => {
       include: [
         {
           model: models.Artist,
-          as: 'artists'
+          as: 'artists',
+          through: {attributes: []} // remove junction table from result
         },
         {
           model: models.Album,

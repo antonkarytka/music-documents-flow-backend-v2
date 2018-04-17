@@ -49,7 +49,7 @@ router.put('/', [
 
     return models.Label.updateOne({id: req.body.id}, req.body)
     .then(label => res.status(200).json(label))
-    .catch(err => res.status(400).json({errors: err }))
+    .catch(err => res.status(400).json(err))
   }
 ]);
 

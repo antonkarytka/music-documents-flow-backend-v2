@@ -41,7 +41,7 @@ const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Album.update(content, {where, ...options})
     .then(() => models.Album.findById(content.id, {transaction}))
-    .tap(album => album.setSongs(content.songs, {transaction}))
+    .tap(album => album.setSongs(content.songs.map(song => song.id), {transaction}))
   })
 };
 

@@ -1,10 +1,11 @@
 require('bluebird');
 
 const models = require('../../index');
+const { sequelize } = models;
 
 
 const fetchById = (id, options = {}) => {
-  return models.sequelize.transaction(transaction => {
+  return sequelize.continueTransaction(options, () => {
     return models.Album.findById(id, {
       include: [
         {
@@ -16,7 +17,6 @@ const fetchById = (id, options = {}) => {
           as: 'songs'
         }
       ],
-      transaction,
       ...options
     })
   })
@@ -24,22 +24,22 @@ const fetchById = (id, options = {}) => {
 
 
 const fetchAll = (options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Album.findAll({transaction, ...options})
+  return sequelize.continueTransaction(options, () => {
+    return models.Album.findAll(options)
   })
 };
 
 
 const createOne = (content, options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Album.create(content, {transaction, ...options})
+  return sequelize.continueTransaction(options, () => {
+    return models.Album.create(content, options)
   })
 };
 
 
 const updateOne = (where, content, options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Album.update(content, {where, transaction, ...options})
+  return sequelize.continueTransaction(options, transaction => {
+    return models.Album.update(content, {where, ...options})
     .then(() => models.Album.findById(content.id, {transaction}))
     .tap(album => album.setSongs(content.songs, {transaction}))
   })

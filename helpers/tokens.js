@@ -17,7 +17,7 @@ const validateToken = token => {
         const { userId } = jwt.decode(token, secret);
         return models.User.fetchById(userId)
         .then(user => {
-          if (user) return Promise.resolve(generateToken({userId}));
+          if (user) return generateToken({userId});
           else return Promise.reject(`Could not find user (${userId}) by userId provided in token's payload.`);
         })
       }

@@ -6,9 +6,11 @@ const { upperFirst: _upperFirst, reduce: _reduce } = require('lodash');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config.json')[env];
+const { addTransactionsBehaviour } = require('../helpers/sequelize');
 
 const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
+addTransactionsBehaviour(sequelize);
 
 fs.readdirSync(__dirname)
   .filter(directoryItem => (directoryItem.length > 0 && directoryItem.indexOf('.') !== 0 && directoryItem !== basename))

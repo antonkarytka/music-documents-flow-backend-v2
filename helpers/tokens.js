@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const secret = require('../config/config').secret;
 const models = require('../models');
 
-const generateToken = ({userId}) => jwt.sign({userId}, secret, {expiresIn: '3 seconds'});
+const generateToken = ({userId}) => jwt.sign({userId}, secret, {expiresIn: '24 hours'});
 
 const validateToken = token => {
   // Check token's validity except expiration date. If successful then token is valid.

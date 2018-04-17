@@ -50,9 +50,8 @@ const signUp = (content, options = {}) => {
         {...content, password: bcrypt.hashSync(content.password, 10)},
         {transaction, ...options}
       )
-      .then(createdUser => Promise.resolve(Object.assign(createdUser, {plainPassword: content.password})))
     })
-    .then(({email, plainPassword}) => logIn({email, password: plainPassword}, {transaction, ...options}))
+    .then(({email}) => logIn({email, password: content.password}, {transaction, ...options}))
   })
 };
 

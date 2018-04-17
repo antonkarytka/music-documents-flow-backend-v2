@@ -1,16 +1,16 @@
 require('bluebird');
 
 const models = require('../../index');
+const { sequelize } = models;
 
 
 const fetchById = (id, options = {}) => {
-  return models.sequelize.transaction(transaction => {
+  return sequelize.continueTransaction(options, () => {
     return models.Label.findById(id, {
       include: [{
         model: models.Artist,
         as: 'artists'
       }],
-      transaction,
       ...options
     })
   })
@@ -18,22 +18,22 @@ const fetchById = (id, options = {}) => {
 
 
 const fetchAll = (options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Label.findAll({transaction, ...options})
+  return sequelize.continueTransaction(options, () => {
+    return models.Label.findAll(options)
   })
 };
 
 
 const createOne = (content, options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Label.create(content, {transaction, ...options})
+  return sequelize.continueTransaction(options, () => {
+    return models.Label.create(content, options)
   })
 };
 
 
 const updateOne = (where, content, options = {}) => {
-  return models.sequelize.transaction(transaction => {
-    return models.Label.update(content, {where, transaction, ...options})
+  return sequelize.continueTransaction(options, transaction => {
+    return models.Label.update(content, {where, ...options})
     .then(() => models.Label.findById(content.id, {transaction}))
     .tap(label => label.setArtists(content.artists, {transaction}))
   })

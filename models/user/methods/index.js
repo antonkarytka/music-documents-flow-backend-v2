@@ -22,7 +22,7 @@ const fetchAll = (options = {}) => {
 
 const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
-    return models.User.update(content, {where, ...options})
+    return models.User.update(content, {where, ...options, individualHooks: true})
     .then(() => models.User.findById(content.id, {transaction}))
   })
 };

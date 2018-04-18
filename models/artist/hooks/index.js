@@ -4,9 +4,9 @@ const models = require('../../index');
 const { sequelize } = models;
 const { TYPE: { LABEL_SIGNED_ARTIST, LABEL_FIRED_ARTIST } } = require('../../event-log/constants');
 
-const hooks = {};
-
-hooks.afterUpdate = (content, options) => handleChanges(content, options);
+const hooks = {
+  afterUpdate: (content, options) => handleChanges(content, options)
+};
 
 const onChange = {
   'labelId': (content, {transaction}) => {
@@ -33,7 +33,7 @@ const onChange = {
 };
 
 
-function handleChanges(content, options = {}) {
+function handleChanges(content, options) {
   return sequelize.continueTransaction(options, transaction => {
     return Promise.map(Object.keys(onChange), key => content.changed(key) && onChange[key](content, {transaction}))
   })

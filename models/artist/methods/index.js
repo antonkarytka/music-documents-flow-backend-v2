@@ -42,7 +42,7 @@ const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Artist.update(content, {where, ...options, individualHooks: true})
     .then(() => models.Artist.findById(content.id, {transaction}))
-    .tap(artist => artist.setSongs(content.songs.map(song => song.id), {transaction}))
+    .tap(artist => artist.setSongs(content.songs.map(song => song.id), {transaction, individualHooks: true}))
       .catch(err => console.log('ERR: ', err))
   })
 };

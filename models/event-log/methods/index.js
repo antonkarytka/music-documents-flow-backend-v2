@@ -27,7 +27,7 @@ const createOne = (content, options = {}) => {
 
 const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
-    return models.EventLog.update(content, {where, ...options})
+    return models.EventLog.update(content, {where, ...options, individualHooks: true})
     .then(() => models.EventLog.findById(content.id, {transaction}))
   })
 };

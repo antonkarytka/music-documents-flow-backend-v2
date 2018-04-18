@@ -1,12 +1,17 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const fs = require('fs');
 
 const router = require('./routes');
 
 const app = express();
 
+
 app.use(logger('dev'));
+app.use(logger('common', {
+  stream: fs.createWriteStream('api.log', {flags: 'a'})
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

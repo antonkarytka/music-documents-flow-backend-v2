@@ -33,9 +33,9 @@ const createOne = (content, options = {}) => {
 
 const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
-    return models.Label.update(content, {where, ...options})
+    return models.Label.update(content, {where, ...options, individualHooks: true})
     .then(() => models.Label.findById(content.id, {transaction}))
-    .tap(label => label.setArtists(content.artists.map(artist => artist.id), {transaction}))
+    .tap(label => label.setArtists(content.artists.map(artist => artist.id), {transaction, individualHooks: true}))
   })
 };
 

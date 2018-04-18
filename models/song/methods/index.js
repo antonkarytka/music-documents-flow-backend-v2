@@ -31,17 +31,18 @@ const fetchAll = (options = {}) => {
 
 
 const createOne = (content, options = {}) => {
-  return sequelize.continueTransaction(options, () => {
+  return sequelize.continueTransaction(options, transaction => {
     return models.Song.create(content, options)
+    .tap(song => song.setArtists(content.artists.map(artist => artist.id), {transaction, individualHooks: true}))
   })
 };
 
 
 const updateOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
-    return models.Song.update(content, {where, ...options})
+    return models.Song.update(content, {where, ...options, individualHooks: true})
     .then(() => models.Song.findById(content.id, {transaction}))
-    .tap(song => song.setArtists(content.artists.map(artist => artist.id), {transaction}))
+    .tap(song => song.setArtists(content.artists.map(artist => artist.id), {transaction, individualHooks: true}))
   })
 };
 

@@ -13,7 +13,7 @@ const fetchById = (id, options = {}) => {
 
 const fetchAll = (options = {}) => {
   return sequelize.continueTransaction(options, () => {
-    return models.EventLog.findAll(options)
+    return models.EventLog.findAll({order: [['createdAt', 'DESC']], ...options})
   })
 };
 

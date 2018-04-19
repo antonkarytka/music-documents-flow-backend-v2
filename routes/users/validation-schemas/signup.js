@@ -21,7 +21,6 @@ module.exports = {
   },
   birthDate: {
     in: ['body'],
-    isDate: true,
     errorMessage: 'User\'s \'birthDate\' property is required.'
   }
 };

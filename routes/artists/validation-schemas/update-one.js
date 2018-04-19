@@ -16,7 +16,6 @@ module.exports = {
   },
   label: {
     in: ['body'],
-    isObject: true,
     errorMessage: 'Artist\'s \'label\' property is required.'
   },
   songs: {

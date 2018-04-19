@@ -1,4 +1,4 @@
-require('bluebird');
+const Promise = require('bluebird');
 
 const models = require('../../index');
 const { sequelize } = models;
@@ -31,8 +31,11 @@ const fetchAll = (options = {}) => {
 
 
 const createOne = (content, options = {}) => {
-  return sequelize.continueTransaction(options, () => {
+  return sequelize.continueTransaction(options, transaction => {
     return models.Album.create(content, options)
+    .tap(({id: albumId}) => content.songs && Promise.each(content.songs, song => {
+      return models.Song.upsertOne({name: song.name, albumId}, {...song, albumId}, {transaction})
+    }))
   })
 };
 

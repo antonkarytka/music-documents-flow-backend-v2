@@ -8,5 +8,10 @@ module.exports = {
     in: ['body'],
     isUUID: true,
     errorMessage: 'Album\'s \'artistId\' property is required.'
+  },
+  songs: {
+    in: ['body'],
+    isArray: true,
+    optional: true
   }
 };

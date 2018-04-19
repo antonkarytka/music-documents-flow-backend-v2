@@ -47,9 +47,21 @@ const updateOne = (where, content, options = {}) => {
 };
 
 
+const upsertOne = (where, content, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.Song.findOne({where, transaction})
+    .then(song => {
+      if (song) return models.Song.updateOne(where, content, options);
+      else return models.Song.createOne(content, options)
+    })
+  })
+};
+
+
 module.exports = {
   fetchById,
   fetchAll,
   createOne,
-  updateOne
+  updateOne,
+  upsertOne
 };

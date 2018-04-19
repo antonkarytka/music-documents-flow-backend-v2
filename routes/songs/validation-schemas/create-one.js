@@ -4,6 +4,11 @@ module.exports = {
     isString: true,
     errorMessage: 'Album\'s \'name\' property is required.'
   },
+  albumId: {
+    in: ['body'],
+    isUUID: true,
+    optional: true
+  },
   artists: {
     in: ['body'],
     isArray: true,

@@ -6,7 +6,6 @@ module.exports = {
   },
   data: {
     in: ['body'],
-    isObject: true,
     errorMessage: 'Event log\'s \'data\' property is required.'
   }
 };

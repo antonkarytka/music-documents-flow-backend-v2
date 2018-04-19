@@ -16,7 +16,6 @@ module.exports = {
   },
   album: {
     in: ['body'],
-    isObject: true,
     errorMessage: 'Song\'s \'album\' property is required.'
   },
   artists: {

@@ -7,7 +7,7 @@ const DEFINITION_OBJECT = {
   lastName: {type: DataTypes.STRING, allowNull: false},
   email: {type: DataTypes.STRING, allowNull: false},
   password: {type: DataTypes.STRING, allowNull: false},
-  birthDate: {type: DataTypes.DATE, allowNull: false}
+  birthDate: {type: DataTypes.DATEONLY, allowNull: false}
 };
 
 const CONFIGURATION_OBJECT = {

@@ -9,6 +9,8 @@ const debug = require('debug')('music-documents-flow-v2:server');
 const http = require('http');
 const models = require('../models');
 
+const scheduleBirthdayEmailing = require('../scheduled-jobs/birthday-mailer');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -93,4 +95,7 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+
+  // Schedule tasks
+  scheduleBirthdayEmailing();
 }

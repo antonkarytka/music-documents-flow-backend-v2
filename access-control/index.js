@@ -7,8 +7,9 @@ const { validateToken } = require('../helpers/tokens');
 
 
 const validateUserRole = (req, res, next, requiredRole) => {
-  const token = req.get('Authorization');
+  let token = req.get('Authorization');
   if (!token) return res.status(401).json(`Authorization token is required for operation: ${req.method} ${req.originalUrl}.`);
+  token = token.replace(/Bearer */, '');
 
   return sequelize.continueTransaction({}, transaction => {
     return validateToken(token, {transaction})

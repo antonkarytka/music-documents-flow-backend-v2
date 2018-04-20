@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const models = require('../../index');
 const { sequelize } = models;
+const { ROLE: { USER } } = require('../../role/constants');
 const { generateToken } = require('../../../helpers/tokens');
 
 
@@ -48,7 +49,15 @@ const signUp = (content, options = {}) => {
     return models.User.fetchById(content.id, {...options})
     .then(user => {
       if (user) return Promise.reject(`User ${user.firstName} ${user.lastName} already exists.`);
-      return models.User.create({...content, password: bcrypt.hashSync(content.password, 10)}, {...options})
+      return models.Role.find({where: {name: USER}, options})
+      .then(({id: roleId}) => models.User.create(
+        {
+          ...content,
+          password: bcrypt.hashSync(content.password, 10),
+          roleId
+        },
+        {...options}
+      ))
     })
     .then(({email}) => logIn({email, password: content.password}, {...options}))
   })

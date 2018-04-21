@@ -27,23 +27,23 @@ If you don't want to see SQL logs in terminal set _logging_ option to _false_ in
 ```
 {
   "development": {
-    "username": "postgres",
-    "password": "root",
+    "username": <DATABASE_USERNAME>,
+    "password": <DATABASE_PASSWORD>,
     "database": "musicflow",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": true
   },
   "test": {
-    "username": "postgres",
-    "password": "root",
+    "username": <DATABASE_USERNAME>,
+    "password": <DATABASE_PASSWORD>,
     "database": "musicflow_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "root",
+    "username": <DATABASE_USERNAME>,
+    "password": <DATABASE_PASSWORD>,
     "database": "musicflow_production",
     "host": "127.0.0.1",
     "dialect": "postgres"

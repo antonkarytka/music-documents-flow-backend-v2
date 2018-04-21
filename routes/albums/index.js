@@ -53,13 +53,13 @@ router.put('/', [
   }
 ]);
 
-router.delete('/', [
+router.delete('/:albumId', [
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
-    return models.Album.deleteOne({id: req.body.id}, req.body)
+    return models.Album.deleteOne({id: req.params.albumId}, req.body)
     .then(label => res.status(200).json(label))
     .catch(err => res.status(400).json(err))
   }

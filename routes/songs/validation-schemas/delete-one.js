@@ -1,6 +1,6 @@
 module.exports = {
-  id: {
-    in: ['body'],
+  songId: {
+    in: ['params'],
     isUUID: true,
     errorMessage: 'Song\'s \'id\' property is required.'
   }

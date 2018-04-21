@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "seed": "sequelize db:seed:all"
+    "seed": "sequelize db:seed:all --config config/database/config.json"
   },
   "dependencies": {
     "bcrypt": "^2.0.0",

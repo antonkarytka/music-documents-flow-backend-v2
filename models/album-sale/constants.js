@@ -1,0 +1,11 @@
+const MODEL_NAME = 'AlbumSale';
+const TABLE_NAME = 'album_sales';
+const MIN_UPDATED_SALES_COUNT = 100;
+const MAX_UPDATED_SALES_COUNT = 300;
+
+module.exports = {
+  MODEL_NAME,
+  TABLE_NAME,
+  MIN_UPDATED_SALES_COUNT,
+  MAX_UPDATED_SALES_COUNT
+};

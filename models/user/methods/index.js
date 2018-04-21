@@ -64,10 +64,23 @@ const signUp = (content, options = {}) => {
 };
 
 
+const deleteOne = (where, content, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.User.destroy(
+      {
+        where: where,
+        ...options
+      }
+    )
+  })
+}
+
+
 module.exports = {
   fetchById,
   fetchAll,
   updateOne,
+  deleteOne,
   logIn,
   signUp
 };

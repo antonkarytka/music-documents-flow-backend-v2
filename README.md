@@ -59,3 +59,16 @@ npm i
 ```
 npm start
 ```
+
+## Seeding
+
+1) To create a script for seeding, you should use the command below.
+```
+sequelize seed:generate --name <SCRIPT_NAME>
+```
+2) Create a new folder under ```/seeders/data``` with ```index.js``` where you will store model's data for seeding.
+3) Run
+```
+npm run seed
+```
+to start the seeding.

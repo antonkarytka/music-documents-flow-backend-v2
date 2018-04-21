@@ -40,9 +40,22 @@ const updateOne = (where, content, options = {}) => {
 };
 
 
+const deleteOne = (where, content, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.Label.destroy(
+      {
+        where: where,
+        ...options
+      }
+    )
+  })
+}
+
+
 module.exports = {
   fetchById,
   fetchAll,
   createOne,
-  updateOne
+  updateOne,
+  deleteOne
 };

@@ -5,7 +5,7 @@ const { upperFirst: _upperFirst } = require('lodash');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
+const config = require('../config/config.json').database[env];
 const { addTransactionsBehaviour } = require('../helpers/sequelize');
 
 const db = {};

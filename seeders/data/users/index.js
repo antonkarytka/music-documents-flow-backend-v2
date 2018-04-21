@@ -13,8 +13,8 @@ module.exports = new Map(
         [
             'First User', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbaa1',
-                firstName: 'First FirstName',
-                lastName: 'First LastName',
+                firstName: 'Uladzislau',
+                lastName: 'Kirichenka',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 birthDate: new Date(),
@@ -26,8 +26,8 @@ module.exports = new Map(
         [
             'Second User', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbaa2',
-                firstName: 'Second FirstName',
-                lastName: 'Second LastName',
+                firstName: 'Andrew',
+                lastName: 'Calyatka',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 birthDate: new Date(),
@@ -39,8 +39,8 @@ module.exports = new Map(
         [
             'Third User', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbaa3',
-                firstName: 'Third FirstName',
-                lastName: 'Third LastName',
+                firstName: 'Anton',
+                lastName: 'Karytka',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 birthDate: new Date(),

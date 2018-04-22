@@ -13,10 +13,17 @@ const fetchById = (id, options = {}) => {
 };
 
 
-const fetchAll = (options = {}) => {
+const fetch = (options = {}) => {
+  options.where = {...options.where, ...options.params};
+  options.limit = Number(options.limit) || 50;
+  options.offset = Number(options.offset) || 0;
+
   return sequelize.continueTransaction(options, transaction => {
-    return models.EventLog.findAll({order: [['createdAt', 'DESC']], ...options})
-    .then(eventLogs => Promise.map(eventLogs, eventLog => addDetailedInfo(eventLog, {transaction})))
+    return models.EventLog.findAndCountAll({order: [['createdAt', 'DESC']], ...options})
+    .then(eventLogs => {
+      return Promise.map(eventLogs.rows, eventLog => addDetailedInfo(eventLog, {transaction}))
+      .then(detailedEventLogs => ({data: detailedEventLogs, total: eventLogs.count}))
+    })
   })
 };
 
@@ -51,7 +58,7 @@ function addDetailedInfo(eventLog, options = {}) {
 
 module.exports = {
   fetchById,
-  fetchAll,
+  fetch,
   createOne,
   updateOne
 };

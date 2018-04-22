@@ -9,7 +9,7 @@ const models = require('../../models/index');
 const { mailer: mailerConfig } = require('../../config/config');
 
 
-const schenduleBirthdayEmailing = () => schedule.scheduleJob({seconds: 10}, () => {
+const scheduleBirthdayEmailing = () => schedule.scheduleJob({hour: 13}, () => {
   const currentDate = new Date();
 
   return models.User.findAll({
@@ -54,4 +54,4 @@ const schenduleBirthdayEmailing = () => schedule.scheduleJob({seconds: 10}, () =
 });
 
 
-module.exports = schenduleBirthdayEmailing;
+module.exports = scheduleBirthdayEmailing;

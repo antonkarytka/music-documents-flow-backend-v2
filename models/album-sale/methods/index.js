@@ -39,9 +39,14 @@ const fetchLatestSaleByAlbumId = (id, options = {}) => {
 };
 
 
-const fetchAll = (options = {}) => {
+const fetch = (options = {}) => {
+  options.where = {...options.where, ...options.params};
+  options.limit = Number(options.limit) || 50;
+  options.offset = Number(options.offset) || 0;
+
   return sequelize.continueTransaction(options, () => {
-    return models.AlbumSale.findAll(options)
+    return models.AlbumSale.findAndCountAll(options)
+    .then(albumSales => ({data: albumSales.rows, total: albumSales.count}))
   })
 };
 
@@ -74,6 +79,6 @@ function getRandomInt(min, max) {
 module.exports = {
   fetchSalesByAlbumId,
   fetchLatestSaleByAlbumId,
-  fetchAll,
+  fetch,
   createOne
 };

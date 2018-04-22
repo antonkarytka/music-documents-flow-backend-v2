@@ -8,7 +8,7 @@ const VALIDATION_SCHEMAS = require('./validation-schemas');
 
 router.get('/', [
   (req, res) => {
-    return models.Song.fetchAll()
+    return models.Song.fetch({...req.query})
     .then(songs => res.status(200).json(songs))
     .catch(err => res.status(400).json({errors: err }))
   }

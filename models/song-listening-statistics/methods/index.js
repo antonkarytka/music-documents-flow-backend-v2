@@ -38,13 +38,16 @@ const fetchLatestStatisticsBySongId = (id, options = {}) => {
   })
 };
 
+const fetch = (options = {}) => {
+  options.where = {...options.where, ...options.params};
+  options.limit = Number(options.limit) || 50;
+  options.offset = Number(options.offset) || 0;
 
-const fetchAll = (options = {}) => {
   return sequelize.continueTransaction(options, () => {
-    return models.SongListeningStatistics.findAll(options)
+    return models.SongListeningStatistics.findAndCountAll(options)
+    .then(songListeningStatistics => ({data: songListeningStatistics.rows, total: songListeningStatistics.count}))
   })
 };
-
 
 const createOne = (content, options = {}) => {
   return sequelize.continueTransaction(options, () => {
@@ -88,6 +91,6 @@ function createNewStatistics(content, statistics) {
 module.exports = {
   fetchStatisticsBySongId,
   fetchLatestStatisticsBySongId,
-  fetchAll,
+  fetch,
   createOne
 };

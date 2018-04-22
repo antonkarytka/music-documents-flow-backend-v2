@@ -14,9 +14,14 @@ const fetchById = (id, options = {}) => {
 };
 
 
-const fetchAll = (options = {}) => {
+const fetch = (options = {}) => {
+  options.where = {...options.where, ...options.params};
+  options.limit = Number(options.limit) || 50;
+  options.offset = Number(options.offset) || 0;
+
   return sequelize.continueTransaction(options, () => {
-    return models.User.findAll(options)
+    return models.User.findAndCountAll(options)
+    .then(users => ({data: users.rows, total: users.count}))
   })
 };
 
@@ -66,7 +71,7 @@ const signUp = (content, options = {}) => {
 
 module.exports = {
   fetchById,
-  fetchAll,
+  fetch,
   updateOne,
   logIn,
   signUp

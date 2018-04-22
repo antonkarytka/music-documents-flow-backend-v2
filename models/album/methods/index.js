@@ -23,9 +23,14 @@ const fetchById = (id, options = {}) => {
 };
 
 
-const fetchAll = (options = {}) => {
+const fetch = (options = {}) => {
+  options.where = {...options.where, ...options.params};
+  options.limit = Number(options.limit) || 50;
+  options.offset = Number(options.offset) || 0;
+
   return sequelize.continueTransaction(options, () => {
-    return models.Album.findAll(options)
+    return models.Album.findAndCountAll(options)
+    .then(albums => ({data: albums.rows, total: albums.count}))
   })
 };
 
@@ -51,7 +56,7 @@ const updateOne = (where, content, options = {}) => {
 
 module.exports = {
   fetchById,
-  fetchAll,
+  fetch,
   createOne,
   updateOne
 };

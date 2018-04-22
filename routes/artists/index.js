@@ -54,4 +54,17 @@ router.put('/', [
 ]);
 
 
+router.delete('/:artistId', [
+  checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Artist.deleteOne({id: req.params.artistId}, req.body)
+    .then(label => res.status(200).json(label))
+    .catch(err => res.status(400).json(err))
+  }
+]);
+
+
 module.exports = router;

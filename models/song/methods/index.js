@@ -63,10 +63,20 @@ const upsertOne = (where, content, options = {}) => {
 };
 
 
+const deleteOne = (where, content, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.Song.destroy(
+      {where, ...options}
+    )
+  })
+}
+
+
 module.exports = {
   fetchById,
   fetch,
   createOne,
   updateOne,
-  upsertOne
+  upsertOne,
+  deleteOne
 };

@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const models = require('../../index');
 const { sequelize } = models;
 const { DETALIZATION_ITEM } = require('./constants');
+const generateDoc = require('./documents-generation');
 
 
 const fetchById = (id, options = {}) => {
@@ -43,6 +44,14 @@ const updateOne = (where, content, options = {}) => {
 };
 
 
+const generateDocument = ({eventLogId, type}, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.EventLog.fetchById(eventLogId, options)
+    .then(eventLog => generateDoc({eventLog, type}, {transaction}))
+  })
+};
+
+
 function addDetailedInfo(eventLog, options = {}) {
   const decoratedEventLog = eventLog.toJSON();
 
@@ -60,5 +69,6 @@ module.exports = {
   fetchById,
   fetch,
   createOne,
-  updateOne
+  updateOne,
+  generateDocument
 };

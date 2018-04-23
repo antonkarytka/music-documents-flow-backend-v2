@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 
 const models = require('../../index');
 const { sequelize } = models;
+const generateDocument = require('./documents-generation')
 
 
 const fetchById = (id, options = {}) => {
@@ -63,10 +64,19 @@ const deleteOne = (where, content, options = {}) => {
 };
 
 
+const createDocument = (content, options = {}) => {
+  return sequelize.continueTransaction(options, () => {
+    return generateDocument(content, options)
+  })
+};
+
+
+
 module.exports = {
   fetchById,
   fetch,
   createOne,
   updateOne,
-  deleteOne
+  deleteOne,
+  createDocument
 };

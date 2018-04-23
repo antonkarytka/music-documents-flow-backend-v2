@@ -34,7 +34,7 @@ module.exports = (songId, options = {}) => {
       const document = new PdfKit();
       document.pipe(writer);
 
-      document.font('Helvetica-Bold').fontSize(25).text(`${song.name} information`, {align: 'center'}).moveDown(1);
+      document.font('Helvetica-Bold').fontSize(25).text(`Song info: ${song.name}`, {align: 'center'}).moveDown(1);
 
       // Artists
       document.font('Helvetica-Bold').fontSize(20).text('Artists', {align: 'center'}).moveDown(0.5);

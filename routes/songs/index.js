@@ -15,6 +15,18 @@ router.get('/', [
 ]);
 
 
+router.get('/top/pdf', [
+  (req, res) => {
+    return models.Song.createDocument({generatorType: 'topSongs', documentType: 'pdf'})
+    .then(document => res.type('application/pdf').status(200).send(document))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({errors: err })
+    })
+  }
+]);
+
+
 router.get('/:songId', [
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
@@ -23,6 +35,19 @@ router.get('/:songId', [
 
     return models.Song.fetchById(req.params.songId)
     .then(song => res.status(200).json(song))
+    .catch(err => res.status(400).json({errors: err }))
+  }
+]);
+
+
+router.get('/:songId/pdf', [
+  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Song.createDocument({...req.params, generatorType: 'singleSong', documentType: 'pdf'})
+    .then(document => res.type('application/pdf').status(200).send(document))
     .catch(err => res.status(400).json({errors: err }))
   }
 ]);

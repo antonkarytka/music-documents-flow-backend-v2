@@ -30,15 +30,14 @@ const scheduleBirthdayEmailing = () => schedule.scheduleJob({hour: 13}, () => {
         }
       });
 
-      return Promise.each(users, user => {
-        const compiledCongratulationsView = pug.compileFile(`${__dirname}/public/birthday-congratulation-view.pug`);
+      const compiledCongratulationsView = pug.compileFile(`${process.cwd()}/public/views/birthday-congratulation-view.pug`);
 
+      return Promise.each(users, user => {
         const mailOptions = {
           from: mailerConfig.user,
           to: user.email,
           subject: 'Happy Birthday!',
           html: compiledCongratulationsView({
-            name: user.firstName,
             firstName: user.firstName,
             lastName: user.lastName
           })

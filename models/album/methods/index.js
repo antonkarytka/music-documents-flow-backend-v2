@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 
 const models = require('../../index');
 const { sequelize } = models;
+const generateDocument = require('./documents-generation');
 
 
 const fetchById = (id, options = {}) => {
@@ -28,6 +29,14 @@ const fetch = (options = {}) => {
   options.limit = Number(options.limit) || 50;
   options.offset = Number(options.offset) || 0;
 
+  return sequelize.continueTransaction(options, () => {
+    return models.Album.findAndCountAll(options)
+    .then(albums => ({data: albums.rows, total: albums.count}))
+  })
+};
+
+
+const fetchAll = (options = {}) => {
   return sequelize.continueTransaction(options, () => {
     return models.Album.findAndCountAll(options)
     .then(albums => ({data: albums.rows, total: albums.count}))
@@ -63,10 +72,20 @@ const deleteOne = (where, content, options = {}) => {
 };
 
 
+const createDocument = (content, options = {}) => {
+  return sequelize.continueTransaction(options, () => {
+    return generateDocument(content, options)
+  })
+};
+
+
+
 module.exports = {
   fetchById,
   fetch,
+  fetchAll,
   createOne,
   updateOne,
-  deleteOne
+  deleteOne,
+  createDocument
 };

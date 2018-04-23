@@ -36,10 +36,7 @@ router.get('/:albumId/pdf', [
 
     return models.Album.createDocument({...req.params, type: 'pdf'})
     .then(document => res.type('application/pdf').status(200).send(document))
-    .catch(err => {
-      console.log(err);
-      res.status(400).json({errors: err })
-    })
+    .catch(err => res.status(400).json({errors: err }))
   }
 ]);
 

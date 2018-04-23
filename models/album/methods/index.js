@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 
 const models = require('../../index');
 const { sequelize } = models;
-const generateDocument = require('./documents-generation')
+const generateDocument = require('./documents-generation');
 
 
 const fetchById = (id, options = {}) => {

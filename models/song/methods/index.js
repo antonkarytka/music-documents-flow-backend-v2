@@ -37,6 +37,14 @@ const fetch = (options = {}) => {
 };
 
 
+const fetchAll = (options = {}) => {
+  return sequelize.continueTransaction(options, () => {
+    return models.Song.findAndCountAll(options)
+    .then(songs => ({data: songs.rows, total: songs.count}))
+  })
+};
+
+
 const createOne = (content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Song.create(content, options)
@@ -84,6 +92,7 @@ const deleteOne = (where, content, options = {}) => {
 module.exports = {
   fetchById,
   fetch,
+  fetchAll,
   createOne,
   updateOne,
   upsertOne,

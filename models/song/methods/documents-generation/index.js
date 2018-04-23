@@ -1,5 +1,7 @@
 const DOCUMENT_GENERATOR = {
-  pdf: require('./pdf')
+  singleSong: require('./single-song'),
+  topSongs: require('./top-songs')
 };
 
-module.exports = ({type, songId}, options = {}) => DOCUMENT_GENERATOR[type](songId, options);
+module.exports = ({generatorType, documentType, songId}, options = {}) =>
+  DOCUMENT_GENERATOR[generatorType][documentType]({songId}, options);

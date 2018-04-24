@@ -41,6 +41,23 @@ router.get('/:albumId/pdf', [
 ]);
 
 
+router.get('/:albumId/xml', [
+  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Album.createDocument({...req.params, type: 'xml'})
+    .then(document => res.type('application/xml').status(200).send(document))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({errors: err });
+    })
+  }
+]);
+
+
+
 router.post('/', [
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {

@@ -15,6 +15,15 @@ router.get('/', [
 ]);
 
 
+router.get('/top/pdf', [
+  (req, res) => {
+    return models.Album.createDocument({generatorType: 'topAlbums', documentType: 'pdf'})
+    .then(document => res.type('application/pdf').status(200).send(document))
+    .catch(err => res.status(400).json({errors: err }))
+  }
+]);
+
+
 router.get('/:albumId', [
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
@@ -23,6 +32,19 @@ router.get('/:albumId', [
 
     return models.Album.fetchById(req.params.albumId)
     .then(album => res.status(200).json(album))
+    .catch(err => res.status(400).json({errors: err }))
+  }
+]);
+
+
+router.get('/:albumId/pdf', [
+  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Album.createDocument({...req.params, generatorType: 'singleAlbum', documentType: 'pdf'})
+    .then(document => res.type('application/pdf').status(200).send(document))
     .catch(err => res.status(400).json({errors: err }))
   }
 ]);

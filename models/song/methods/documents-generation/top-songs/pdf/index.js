@@ -40,7 +40,7 @@ module.exports = (content, options = {}) => {
         });
         return songs;
       }, []);
-      songs = _orderBy(songs, ['listeningStatistics.total'], ['desc']);
+      songs = _orderBy(songs, ['listeningStatistics.total'], ['desc']).slice(0, 15);
 
       const creationDate = new Date().toLocaleDateString();
 

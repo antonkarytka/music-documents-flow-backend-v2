@@ -10,7 +10,7 @@ module.exports = (content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Album.fetchAll({
       include: [
-        {
+      {
           model: models.Artist,
           as: 'artist'
         },
@@ -24,7 +24,10 @@ module.exports = (content, options = {}) => {
       transaction
     })
     .then(albums => {
-      albums = _orderBy(albums.data.map(album => ({...album.toJSON(), sales: album.sales[0]})), ['sales.sales'], ['desc']);
+      albums = _orderBy(
+        albums.data.map(album => ({...album.toJSON(), sales: album.sales[0]})),
+        ['sales.sales'], ['desc']
+      ).slice(0, 15);
 
       const creationDate = new Date().toLocaleDateString();
 
@@ -32,7 +35,7 @@ module.exports = (content, options = {}) => {
       const document = new PdfKit();
       document.pipe(writer);
 
-      document.font('Helvetica-Bold').fontSize(25).text(`Best Selling Albums`, {align: 'center'}).moveDown(1);
+      document.font('Helvetica-Bold').fontSize(25).text(`Best Selling Albums Ever`, {align: 'center'}).moveDown(1);
 
       // Albums
       albums.forEach(album => document.font('Helvetica').fontSize(18).text(`- ${generateAlbumName(album)}`, {align: 'left'}));

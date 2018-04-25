@@ -11,7 +11,13 @@ module.exports = (albumId, options = {}) => {
       include: [
         {
           model: models.Artist,
-          as: 'artist'
+          as: 'artist',
+          include: [
+            {
+              model: models.Label,
+              as: 'label'
+            }
+          ]
         },
         {
           model: models.Song,
@@ -32,29 +38,35 @@ module.exports = (albumId, options = {}) => {
       transaction
     })
     .then(album => {
-      // console.log(js2xmlparser('statistics', _.pick(album, [
-      //   ''
-      // ])))
-      // const data = [
-      //   album.artist.firstName, album.artist.lastName, album.name
-      // ];
-      // const data = _.map(album, field => _.pick(field, [
-      //   'firstName', 'lastName', 'createdAt', 'name', 'aritst.name'
-      // ]));
-      // const data = _.map(album.artist, field => _.pick(field, [
-      //   'firstName', 'lastName'
-      // ]));
-      const data = _.map(album.songs, field => ({"song": _.pick(field, [
-        'name', 'createdAt'
-      ])}));
-      const data2 = _.map(album.sales, field => _.pick(field, [
-        'sales', 'createdAt'
-      ]));
-      console.log(data);
-      return new Promise(resolve => resolve(js2xmlparser.parse('statistics', [data, data2])));
+      return new Promise(resolve => resolve(
+        js2xmlparser.parse('statistics', createXmlDocument(album)))
+      );
     })
   });
 };
+
+function createXmlDocument(album) {
+  const artistData = _.pick(album.artist, 'firstName', 'lastName', 'createdAt');
+  const artistLabelData = _.pick(album.artist.label, 'name', 'createdAt');
+  const albumData = _.pick(album, 'name', 'createdAt');
+  const songsData = _.map(album.songs, field => _.pick(field, [
+    'name', 'createdAt'
+  ]));
+  const salesData = _.map(album.sales, field => _.pick(field, [
+    'sales', 'createdAt'
+  ]));
+  return {
+    artist: {
+      generalInfo: artistData,
+      label: artistLabelData
+    },
+    album: albumData,
+    songs: {
+      song: songsData
+    },
+    sales: salesData
+  }
+}
 
 
 function generateSongName({song, albumArtist}) {

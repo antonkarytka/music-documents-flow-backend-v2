@@ -2,10 +2,10 @@ const Promise = require('bluebird');
 const streams = require('memory-streams');
 const PdfKit = require('pdfkit');
 
-const models = require('../../../../index');
+const models = require('../../../../../index');
 const { sequelize } = models;
 
-module.exports = (songId, options = {}) => {
+module.exports = ({songId}, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Song.fetchById(songId, {
       include: [

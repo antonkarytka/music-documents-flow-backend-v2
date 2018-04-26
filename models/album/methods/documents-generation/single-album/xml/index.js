@@ -2,10 +2,10 @@ const Promise = require('bluebird');
 var js2xmlparser = require("js2xmlparser");
 var _ = require('lodash');
 
-const models = require('../../../../index');
+const models = require('../../../../../index');
 const { sequelize } = models;
 
-module.exports = (albumId, options = {}) => {
+module.exports = ({albumId}, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Album.fetchById(albumId, {
       include: [

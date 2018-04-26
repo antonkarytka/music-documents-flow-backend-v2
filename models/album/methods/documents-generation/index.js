@@ -1,6 +1,7 @@
 const DOCUMENT_GENERATOR = {
-  pdf: require('./pdf'),
-  xml: require('./xml'),
+  singleAlbum: require('./single-album'),
+  topAlbums: require('./top-albums')
 };
 
-module.exports = ({type, albumId}, options = {}) => DOCUMENT_GENERATOR[type](albumId, options);
+module.exports = ({generatorType, documentType, albumId}, options = {}) =>
+  DOCUMENT_GENERATOR[generatorType][documentType]({albumId}, options);

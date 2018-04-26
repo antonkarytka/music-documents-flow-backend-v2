@@ -1,3 +1,4 @@
 module.exports = {
-  pdf: require('./pdf')
+  pdf: require('./pdf'),
+  xml: require('./xml'),
 };

@@ -33,6 +33,19 @@ router.get('/top/xml', [
   }
 ]);
 
+router.get('/top/xlsx', [
+  (req, res) => {
+    return models.Album.createDocument({generatorType: 'topAlbums', documentType: 'xlsx'})
+    .then(document => {
+      res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-disposition', 'attachment; filename=' + 'out.xlsx');
+      res.status(200).send(document);
+    })
+    // .catch(err => res.status(400).json({errors: err }))
+    .catch(err => console.log(err));
+  }
+]);
+
 
 router.get('/:albumId', [
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
@@ -68,6 +81,23 @@ router.get('/:albumId/xml', [
 
     return models.Album.createDocument({...req.params, generatorType: 'singleAlbum', documentType: 'xml'})
     .then(document => res.type('application/xml').status(200).send(document))
+    .catch(err => res.status(400).json({errors: err }))
+  }
+]);
+
+
+router.get('/:albumId/xlsx', [
+  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Album.createDocument({...req.params, generatorType: 'singleAlbum', documentType: 'xlsx'})
+    .then(document => {
+      res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-disposition', 'attachment; filename=' + 'out.xlsx');
+      res.status(200).send(document);
+    })
     .catch(err => res.status(400).json({errors: err }))
   }
 ]);

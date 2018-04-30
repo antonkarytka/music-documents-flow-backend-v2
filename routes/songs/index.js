@@ -38,6 +38,22 @@ router.get('/top/xml', [
 ]);
 
 
+router.get('/top/xlsx', [
+  (req, res) => {
+    return models.Song.createDocument({generatorType: 'topSongs', documentType: 'xlsx'})
+    .then(document => {
+      res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-disposition', 'attachment; filename=' + 'out.xlsx');
+      res.status(200).send(document)
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({errors: err })
+    })
+  }
+]);
+
+
 router.get('/:songId', [
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {

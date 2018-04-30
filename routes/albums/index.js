@@ -85,8 +85,7 @@ router.get('/:albumId/xlsx', [
       res.setHeader('Content-disposition', 'attachment; filename=' + 'out.xlsx');
       res.status(200).send(document);
     })
-    // .catch(err => res.status(400).json({errors: err }))
-    .catch(err => console.log(err))
+    .catch(err => res.status(400).json({errors: err }))
   }
 ]);
 

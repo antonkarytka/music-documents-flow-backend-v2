@@ -80,10 +80,10 @@ const createDocument = (content, options = {}) => {
 };
 
 
-const deleteOne = (where, content, options = {}) => {
+const remove = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Song.destroy(
-      {where, ...options}
+      { where: { id: content.songs }, ...options }
     )
   })
 }
@@ -96,6 +96,6 @@ module.exports = {
   createOne,
   updateOne,
   upsertOne,
-  deleteOne,
+  remove,
   createDocument
 };

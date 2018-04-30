@@ -7,6 +7,10 @@ const {
 const models = require('../../../../../index');
 const { sequelize } = models;
 
+/**
+ * Commented out stuff can be used to save generated file to disk.
+ */
+
 module.exports = (content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Song.fetchAll({
@@ -45,8 +49,8 @@ module.exports = (content, options = {}) => {
       //   useStyles: true,
       //   useSharedStrings: true
       // };
-
       // const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+
       const workbook = new Excel.Workbook();
       const sheet = workbook.addWorksheet('Top Songs');
 
@@ -80,6 +84,9 @@ module.exports = (content, options = {}) => {
           };
         });
       });
+
+      // return workbook.commit()
+      // .then(() => true)
 
       return workbook.xlsx.writeBuffer()
     })

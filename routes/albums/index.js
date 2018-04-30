@@ -73,6 +73,24 @@ router.get('/:albumId/xml', [
 ]);
 
 
+router.get('/:albumId/xlsx', [
+  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.Album.createDocument({...req.params, generatorType: 'singleAlbum', documentType: 'xlsx'})
+    .then(document => {
+      res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-disposition', 'attachment; filename=' + 'out.xlsx');
+      res.status(200).send(document);
+    })
+    // .catch(err => res.status(400).json({errors: err }))
+    .catch(err => console.log(err))
+  }
+]);
+
+
 
 router.post('/', [
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),

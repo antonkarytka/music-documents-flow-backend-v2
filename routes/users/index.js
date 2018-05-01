@@ -52,6 +52,20 @@ router.post('/signup', [
   }
 ]);
 
+
+router.put('/', [
+  checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.User.updateOne({id: req.body.id}, req.body)
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(400).json({errors: err }))
+  }
+]);
+
+
 router.delete('/:userId', [
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {

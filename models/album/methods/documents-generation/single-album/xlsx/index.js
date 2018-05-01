@@ -57,7 +57,9 @@ module.exports = ({albumId}, options = {}) => {
 };
 
 function getSongsSheet(workbook, songs) {
-  const songsSheet = workbook.addWorksheet('Album songs');
+  const songsSheet = workbook.addWorksheet('Album songs', {
+    pageSetup: { fitToPage: true }
+  });
 
   songsSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },
@@ -79,7 +81,9 @@ function getSongsSheet(workbook, songs) {
 }
 
 function getAlbumGeneralInfoSheet(workbook, album) {
-  const albumSheet = workbook.addWorksheet('Album general info');
+  const albumSheet = workbook.addWorksheet('Album general info', {
+    pageSetup: { fitToPage: true }
+  });
 
   albumSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },
@@ -103,7 +107,9 @@ function getAlbumGeneralInfoSheet(workbook, album) {
 }
 
 function getSalesSheet(workbook, sales) {
-  const salesSheet = workbook.addWorksheet('Sales');
+  const salesSheet = workbook.addWorksheet('Sales', {
+    pageSetup: { fitToPage: true }
+  });
 
   salesSheet.columns = [
     { header: 'Sales', key: 'sales', width: 20 },

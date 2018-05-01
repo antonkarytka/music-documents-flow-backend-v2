@@ -50,7 +50,9 @@ module.exports = ({songId}, options = {}) => {
 
 
 function getSongGeneralInfoSheet(workbook, song) {
-  const songsSheet = workbook.addWorksheet('Song general info');
+  const songsSheet = workbook.addWorksheet('Song general info', {
+    pageSetup: { fitToPage: true }
+  });
 
   songsSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },
@@ -70,7 +72,9 @@ function getSongGeneralInfoSheet(workbook, song) {
 }
 
 function getArtistsSheet(workbook, artists) {
-  const artistsSheet = workbook.addWorksheet('Artists');
+  const artistsSheet = workbook.addWorksheet('Artists', {
+    pageSetup: { fitToPage: true }
+  });
 
   artistsSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },
@@ -92,7 +96,9 @@ function getArtistsSheet(workbook, artists) {
 }
 
 function getListeningStatisticsSheet(workbook, statistics) {
-  const statisticsSheet = workbook.addWorksheet('Listening statistics');
+  const statisticsSheet = workbook.addWorksheet('Listening statistics', {
+    pageSetup: { fitToPage: true }
+  });
 
   statisticsSheet.columns = [
     { header: 'Apple Music', key: 'appleMusic', width: 20 },

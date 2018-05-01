@@ -36,24 +36,11 @@ module.exports = (artistId, options = {}) => {
   });
 };
 
-function createXmlDocument(artist) {
-  const artistData = _.pick(artist, 'firstName', 'lastName', 'createdAt');
-  const labelData = _.pick(artist.label, 'name', 'createdAt');
-  const songsData = _.map(artist.songs, field => ({
-    song: _.pick(field, ['name', 'createdAt']),
-    album: _.pick(field.album, ['name', 'createdAt'])
-  }));
-  return {
-    artist: artistData,
-    label: labelData,
-    songs: {
-      song: songsData
-    }
-  }
-}
 
 function getSongsSheet(workbook, songs) {
-  const songsSheet = workbook.addWorksheet('Songs');
+  const songsSheet = workbook.addWorksheet('Songs', {
+    pageSetup: { fitToPage: true }
+  });
 
   songsSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },
@@ -79,7 +66,9 @@ function getSongsSheet(workbook, songs) {
 }
 
 function getArtistInfoSheet(workbook, artist) {
-  const artistSheet = workbook.addWorksheet('Artist general info');
+  const artistSheet = workbook.addWorksheet('Artist general info', {
+    pageSetup: { fitToPage: true }
+  });
 
   artistSheet.columns = [
     { header: 'First Name', key: 'firstName', width: 20 },

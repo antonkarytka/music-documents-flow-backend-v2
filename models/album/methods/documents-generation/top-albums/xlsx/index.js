@@ -41,7 +41,9 @@ module.exports = ({albumId}, options = {}) => {
 };
 
 function getAlbumsGeneralInfo(workbook, albums) {
-  const albumsSheet = workbook.addWorksheet('Album general info');
+  const albumsSheet = workbook.addWorksheet('Album general info', {
+    pageSetup: { fitToPage: true }
+  });
 
   albumsSheet.columns = [
     { header: 'Name', key: 'name', width: 20 },

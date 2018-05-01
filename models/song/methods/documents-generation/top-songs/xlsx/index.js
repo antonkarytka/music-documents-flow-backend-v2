@@ -52,10 +52,13 @@ module.exports = (content, options = {}) => {
       // const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 
       const workbook = new Excel.Workbook();
-      const sheet = workbook.addWorksheet('Top Songs');
+      const sheet = workbook.addWorksheet('Top Songs', {
+        pageSetup: { fitToPage: true }
+      });
 
       sheet.columns = [
         { header: 'Name', key: 'name', width: 20 },
+        { header: 'Artists', key: 'artists', width: 20 },
         { header: 'Apple Music', key: 'appleMusic', width: 20 },
         { header: 'Google Play Music', key: 'googlePlayMusic', width: 20 },
         { header: 'Spotify', key: 'spotify', width: 20 },
@@ -63,9 +66,12 @@ module.exports = (content, options = {}) => {
         { header: 'Release Date', key: 'releaseDate', width: 20 },
       ];
 
+      sheet.getRow(1).font = { bold: true };
+
       songs.forEach(song => {
         sheet.addRow({
           name: song.name,
+          artists: song.artists.map(artist => `${artist.firstName} ${artist.lastName} & `).join('').slice(0, -2),
           appleMusic: song.listeningStatistics.appleMusic,
           googlePlayMusic: song.listeningStatistics.googlePlayMusic,
           spotify: song.listeningStatistics.spotify,

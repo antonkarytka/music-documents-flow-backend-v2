@@ -52,10 +52,19 @@ module.exports = ({songId}, options = {}) => {
       // Listening Statistics
       document.font('Helvetica-Bold').fontSize(20).text('Listening Statistics', {align: 'center'}).moveDown(0.5);
       song.listeningStatistics.forEach(statisticsItem => document.font('Helvetica').fontSize(18).text(`- ${new Date(statisticsItem.createdAt).toLocaleString()}: Apple Music (${statisticsItem.appleMusic}), Google Play Music (${statisticsItem.googlePlayMusic}), Spotify: (${statisticsItem.spotify}), Yandex Music (${statisticsItem.yandexMusic})`, {align: 'left'}).moveDown(0.5));
-      document.text().moveDown(2);
+      document.moveDown(1);
 
 
-      document.font('Helvetica').fontSize(18).text(`Date: ${creationDate}`, {align: 'right'});
+      document.font('Helvetica').fontSize(18).text(`Date: ${creationDate}`, {align: 'right'}).moveDown(2);
+
+      document.image(
+        `${process.cwd()}/public/images/ktk-icon.png`,
+        document.page.width - 222, // image's width + document's margin = 150 + 72
+        undefined,
+        {fit: [150, 150]}
+      );
+      document.moveDown(0.3);
+      document.font('Helvetica').fontSize(16).text(`Sincerely yours, KTK team.`, {align: 'right'}).moveDown(1);
 
       document.end();
 

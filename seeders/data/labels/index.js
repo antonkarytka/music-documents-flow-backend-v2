@@ -1,33 +1,57 @@
 module.exports = new Map(
     [
         [
-            'First Label', {
+            'Good Vibes', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fb1c1',
-                name: 'First Label',
+                name: 'Good Vibes',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }
         ],
         [
-            'Second Label', {
+            'Nice Label', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fb1c2',
-                name: 'Second Label',
+                name: 'Nice Label',
                 createdAt: new Date(),
                 updatedAt: new Date(),  
             }
         ],
         [
-            'Third Label', {
+            'Black Star', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fb1c3',
-                name: 'Third Label',
+                name: 'Black Star',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }
         ],
         [
-            'Fourth Label', {
+            'Hello recs.', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fb1c4',
-                name: 'Fourth Label',
+                name: 'Hello recs.',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }
+        ],
+        [
+            'Cheers', {
+                id: 'e9649888-440e-4cc7-8832-e34df98fb1c5',
+                name: 'Cheers',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }
+        ],
+        [
+            'Red sun', {
+                id: 'e9649888-440e-4cc7-8832-e34df98fb1c6',
+                name: 'Red sun',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }
+        ],
+        [
+            'Blue color', {
+                id: 'e9649888-440e-4cc7-8832-e34df98fb1c7',
+                name: 'Blue color',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }

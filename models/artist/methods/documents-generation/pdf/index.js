@@ -42,8 +42,8 @@ module.exports = (artistId, options = {}) => {
 
       // Songs
       document.font('Helvetica-Bold').fontSize(20).text('Songs', {align: 'center'}).moveDown(0.5);
-      document.font('Helvetica').fontSize(18).text(`Artist's songs are listed below. Song's album is defined in parentheses. If song doesn't belong to any albums, then it is a "single".`, {align: 'left'}).moveDown(0.5);
-      artist.songs.forEach(song => document.font('Helvetica').fontSize(18).text(`- ${song.name} (${song.album ? song.album.name : 'single'})`, {align: 'left'}));
+      document.font('Helvetica').fontSize(18).text(`Artist's songs are listed below. Song's album is defined in parentheses.`, {align: 'left'}).moveDown(0.5);
+      artist.songs.forEach(song => document.font('Helvetica').fontSize(18).text(`- ${song.name} (${song.album.name})`, {align: 'left'}));
       document.text().moveDown(2);
 
       document.font('Helvetica').fontSize(18).text(`Date: ${creationDate}`, {align: 'right'}).moveDown(2);

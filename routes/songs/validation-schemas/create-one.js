@@ -12,6 +12,9 @@ module.exports = {
   artists: {
     in: ['body'],
     isArray: true,
-    errorMessage: 'Album\'s \'artists\' property is required.'
+    errorMessage: 'Album\'s \'artists\' property is required and cannot be an empty array.',
+    custom: {
+      options: value => value.length > 0
+    },
   }
 };

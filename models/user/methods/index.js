@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const models = require('../../index');
 const { sequelize } = models;
-const { ROLE: { USER } } = require('../../role/constants');
+const { ROLE: { USER, ADMIN } } = require('../../role/constants');
 const { generateToken } = require('../../../helpers/tokens');
 
 
@@ -36,14 +36,29 @@ const updateOne = (where, content, options = {}) => {
 
 const logIn = ({email, password}, options = {}) => {
   return sequelize.continueTransaction(options, () => {
-    return models.User.find({where: {email}, ...options})
+    return models.User.find({
+      where: {email},
+      include: [{
+        model: models.Role,
+        as: 'role',
+        attributes: ['name']
+      }],
+      ...options
+    })
     .then(user => {
       if (!user) return Promise.reject(`Could not find user with email ${email}`);
+      user = user.toJSON();
 
       const passwordIsValid = bcrypt.compareSync(password, user.password);
       if (!passwordIsValid) return Promise.reject(`Provided password doesn't match the real one.`);
 
-      return {user, token: generateToken({userId: user.id})}
+      return {
+        user: {
+          ...user,
+          isAdmin: user.role.name === ADMIN
+        },
+        token: generateToken({userId: user.id}),
+      }
     })
   })
 };
@@ -61,7 +76,7 @@ const signUp = (content, options = {}) => {
           password: bcrypt.hashSync(content.password, 10),
           roleId
         },
-        {...options}
+        options
       ))
     })
     .then(({email}) => logIn({email, password: content.password}, {...options}))

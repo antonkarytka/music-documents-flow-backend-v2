@@ -34,7 +34,7 @@ router.post('/login', [
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
 
     return models.User.logIn(req.body)
-    .then(({user, token}) => res.status(200).json({user, token}))
+    .then(user => res.status(200).json(user))
     .catch(err => res.status(400).json(err))
   },
 ]);

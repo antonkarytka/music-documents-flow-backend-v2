@@ -5,98 +5,98 @@ const songs  = require('../songs/index')
 module.exports = new Map(
     [
         [
-            'Label3Artist1', {
+            'GoodVibesPostmalone', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee1',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'LABEL_SIGNED_ARTIST',
                 data: JSON.stringify({
-                    labelId: labels.get('Third Label').id,
-                    artistId: artists.get('First Artist').id
+                    labelId: labels.get('Good Vibes').id,
+                    artistId: artists.get('Postmalone').id
                 })
             }
         ],
         [
-            'Label4Artist2', {
+            'GoodVibesCudi', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee2',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'LABEL_SIGNED_ARTIST',
                 data: JSON.stringify({
-                    labelId: labels.get('Fourth Label').id,
-                    artistId: artists.get('Second Artist').id
+                    labelId: labels.get('Good Vibes').id,
+                    artistId: artists.get('Kid cudi').id
                 }), 
             }
         ],
         [
-            'Label2Artist3', {
+            'NiceLabelHer', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee3',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'LABEL_SIGNED_ARTIST',
                 data: JSON.stringify({
-                    labelId: labels.get('Second Label').id,
-                    artistId: artists.get('Third Artist').id
+                    labelId: labels.get('Nice Label').id,
+                    artistId: artists.get('Her').id
                 }),
             }
         ],
         [
-            'Artist1Song1', {
+            'LanaUltraviolence', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee4',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'ARTIST_NEW_SONG',
                 data: JSON.stringify({
-                    songId: songs.get('First Song').id,
-                    artistId: artists.get('First Artist').id
+                    songId: songs.get('Ultraviolence').id,
+                    artistId: artists.get('Lana del rey').id
                 }),
             }
         ],
         [
-            'Artist2Song2', {
+            'FKAPendulum', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee5',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'ARTIST_NEW_SONG',
                 data: JSON.stringify({
-                    songId: songs.get('Second Song').id,
-                    artistId: artists.get('Second Artist').id
+                    songId: songs.get('Pendulum').id,
+                    artistId: artists.get('FKA Twigs').id
                 }),
             }
         ],
         [
-            'Artist2Song1', {
+            'XXCrystalised', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee6',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'ARTIST_NEW_SONG',
                 data: JSON.stringify({
-                    songId: songs.get('First Song').id,
-                    artistId: artists.get('Second Artist').id
+                    songId: songs.get('Crystalised').id,
+                    artistId: artists.get('The xx').id
                 }),
             }
         ],
         [
-            'Artist3Song3', {
+            'DrakePassionfruit', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee7',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'ARTIST_NEW_SONG',
                 data: JSON.stringify({
-                    songId: songs.get('Third Song').id,
-                    artistId: artists.get('Third Artist').id
+                    songId: songs.get('Passionfruit').id,
+                    artistId: artists.get('Drake').id
                 }),
             }
         ],
         [
-            'Artist3Song4', {
+            'MigosStirFry', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fbee8',
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 type: 'ARTIST_NEW_SONG',
                 data: JSON.stringify({
-                    songId: songs.get('Fourth Song').id,
-                    artistId: artists.get('Third Artist').id
+                    songId: songs.get('Stir Fry').id,
+                    artistId: artists.get('Migos').id
                 }),
             }
         ]

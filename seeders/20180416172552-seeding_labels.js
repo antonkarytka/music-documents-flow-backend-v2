@@ -5,10 +5,13 @@ const labels  = require('./data/labels/index')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('labels', [
-      labels.get('First Label'),
-      labels.get('Second Label'),
-      labels.get('Third Label'),
-      labels.get('Fourth Label')], {});
+      labels.get('Good Vibes'),
+      labels.get('Nice Label'),
+      labels.get('Black Star'),
+      labels.get('Hello recs.'),
+      labels.get('Cheers'),
+      labels.get('Red sun'),
+      labels.get('Blue color')], {});
   },
 
   down: (queryInterface, Sequelize) => {

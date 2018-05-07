@@ -29,8 +29,8 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 // Pass {force: true} in order to update tables in the database and remove all data stored in them.
-// models.sequelize.sync({force: true})
-models.sequelize.sync()
+models.sequelize.sync({force: true})
+// models.sequelize.sync()
 .then(() => {
   server.listen(port);
   server.on('error', onError);

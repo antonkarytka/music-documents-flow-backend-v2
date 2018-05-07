@@ -27,7 +27,7 @@ const fetchById = (id, options = {}) => {
 
 const fetch = (options = {}) => {
   options.where = {...options.where, ...options.params};
-  options.limit = Number(options.limit) || 50;
+  options.limit = Number(options.limit) || 1000;
   options.offset = Number(options.offset) || 0;
 
   return sequelize.continueTransaction(options, () => {

@@ -4,6 +4,7 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureAdmin } = require('../../access-control');
 
 router.get('/', [
   (req, res) => {
@@ -48,6 +49,20 @@ router.post('/signup', [
 
     return models.User.signUp(req.body)
     .then(user => res.status(200).json(user))
+    .catch(err => res.status(400).json(err))
+  }
+]);
+
+
+router.post('/send-emails', [
+  ensureAdmin,
+  checkSchema(VALIDATION_SCHEMAS.SEND_EMAILS),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
+
+    return models.User.sendEmails(req.body)
+    .then(result => res.status(200).json(result))
     .catch(err => res.status(400).json(err))
   }
 ]);

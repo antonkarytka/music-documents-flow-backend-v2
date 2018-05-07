@@ -1,5 +1,7 @@
 const Promise = require('bluebird');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const { mailer: mailerConfig } = require('../../../config/config');
 
 const models = require('../../index');
 const { sequelize } = models;
@@ -84,6 +86,43 @@ const signUp = (content, options = {}) => {
 };
 
 
+const sendEmails = (content, options = {}) => {
+  return sequelize.continueTransaction(options, transaction => {
+    return models.User.fetchById(content.sender.id, options)
+    .then(adminUser => {
+      if (!adminUser) return Promise.reject('User doesn\'t exist.');
+      const transporter = nodemailer.createTransport({
+        service: mailerConfig.service,
+        auth: {
+          user: mailerConfig.user,
+          pass: mailerConfig.pass
+        }
+      });
+
+      return Promise.each(content.emails, email => {
+        return models.User.fetchById(email.recipient.id, {transaction})
+        .then(recipient => {
+          if (!recipient) return Promise.resolve();
+
+          const mailOptions = {
+            from: mailerConfig.user,
+            to: recipient.email,
+            subject: email.subject,
+            html: email.content
+          };
+
+          return transporter.sendMail(mailOptions, (err, info) => {
+            if (err) return console.log(err);
+            else console.log(info);
+          });
+        })
+      })
+    })
+    .then(() => Promise.resolve('Emails sent successfully.'))
+  })
+};
+
+
 const deleteOne = (where, content, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.User.destroy(
@@ -99,5 +138,6 @@ module.exports = {
   updateOne,
   deleteOne,
   logIn,
-  signUp
+  signUp,
+  sendEmails
 };

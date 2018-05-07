@@ -9,7 +9,7 @@ module.exports = new Map(
                 lastName: 'Richard Post',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Good Vibes').id
             }
         ],
         [
@@ -19,7 +19,7 @@ module.exports = new Map(
                 lastName: 'Seguro Mescudi',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Good Vibes').id
             }
         ],
         [
@@ -29,7 +29,7 @@ module.exports = new Map(
                 lastName: 'Chorni',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Good Vibes').id
             }
         ],
         [
@@ -39,7 +39,7 @@ module.exports = new Map(
                 lastName: 'Of leon',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Good Vibes').id
             }
         ],
         [
@@ -49,7 +49,7 @@ module.exports = new Map(
                 lastName: 'Band',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Nice Label').id
             }
         ],
         [
@@ -59,7 +59,7 @@ module.exports = new Map(
                 lastName: 'Band',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Nice Label').id
             }
         ],
         [
@@ -69,7 +69,7 @@ module.exports = new Map(
                 lastName: 'Del Rey',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Nice Label').id
             }
         ],
         [
@@ -79,7 +79,7 @@ module.exports = new Map(
                 lastName: 'Ocean',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Black Star').id
             }
         ],
         [
@@ -89,7 +89,7 @@ module.exports = new Map(
                 lastName: 'Twigs',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Black Star').id
             }
         ],
         [
@@ -99,17 +99,27 @@ module.exports = new Map(
                 lastName: 'xx',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Black Star').id
             }
         ],
         [
-            'A$AP Ferg', {
+            'Travis Scott', {
+                id: 'e9649888-440e-4cc7-8832-e34df98fba17',
+                firstName: 'Travis',
+                lastName: 'Scott',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                labelId: labels.get('Hello recs.').id
+            }
+        ],
+        [
+            'ASAP Ferg', {
                 id: 'e9649888-440e-4cc7-8832-e34df98fba11',
                 firstName: 'A$AP',
                 lastName: 'Ferg',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Hello recs.').id
             }
         ],
         [
@@ -119,7 +129,7 @@ module.exports = new Map(
                 lastName: 'Drake Graham',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Hello recs.').id
             }
         ],
         [
@@ -129,7 +139,7 @@ module.exports = new Map(
                 lastName: 'Xan',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Cheers').id
             }
         ],
         [
@@ -139,7 +149,7 @@ module.exports = new Map(
                 lastName: 'Dwayne Onfroy',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Third Label').id
+                labelId: labels.get('Cheers').id
             }
         ],
         [
@@ -149,7 +159,7 @@ module.exports = new Map(
                 lastName: 'Bin Abraham-Joseph ',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Fourth Label').id
+                labelId: labels.get('Red sun').id
             }
         ],
         [
@@ -159,7 +169,7 @@ module.exports = new Map(
                 lastName: 'Band',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                labelId: labels.get('Second Label').id
+                labelId: labels.get('Blue color').id
             }
         ]
     ]

@@ -8,7 +8,7 @@ module.exports = new Map(
                 name: 'Stoney',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('First Artist').id
+                artistId: artists.get('Postmalone').id
             }
         ],
         [//Kid cudi
@@ -17,7 +17,7 @@ module.exports = new Map(
                 name: 'Man on the moon',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Second Artist').id
+                artistId: artists.get('Kid cudi').id
             }
         ],
         [//Lizer
@@ -26,7 +26,7 @@ module.exports = new Map(
                 name: 'MY SOUL',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lizer').id
             }
         ],
         [//Kings of leon
@@ -35,7 +35,7 @@ module.exports = new Map(
                 name: 'Come around sundown',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Kings of leon').id
             }
         ],
         [//Foals
@@ -44,7 +44,7 @@ module.exports = new Map(
                 name: 'Antidotes',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Foals').id
             }
         ],
         [
@@ -53,7 +53,7 @@ module.exports = new Map(
                 name: 'Total life forever',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Foals').id
             }
         ],
         [//Her
@@ -62,7 +62,7 @@ module.exports = new Map(
                 name: 'Her',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Her').id
             }
         ],
         [//Lana del rey
@@ -71,7 +71,7 @@ module.exports = new Map(
                 name: 'Born to die',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lana del rey').id
             }
         ],
         [
@@ -80,7 +80,7 @@ module.exports = new Map(
                 name: 'Honeymoon',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lana del rey').id
             }
         ],
         [
@@ -89,7 +89,7 @@ module.exports = new Map(
                 name: 'Ultraviolence',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lana del rey').id
             }
         ],
         [//Frank Ocean
@@ -98,7 +98,7 @@ module.exports = new Map(
                 name: 'channel ORANGE',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Frank Ocean').id
             }
         ],
         [//FKA Twigs
@@ -107,7 +107,7 @@ module.exports = new Map(
                 name: 'LP1',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('FKA Twigs').id
             }
         ],
         [//The xx
@@ -116,7 +116,7 @@ module.exports = new Map(
                 name: 'I see you',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('The xx').id
             }
         ],
         [
@@ -125,7 +125,7 @@ module.exports = new Map(
                 name: 'xx',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('The xx').id
             }
         ],
         [//Travis Scott
@@ -134,7 +134,7 @@ module.exports = new Map(
                 name: 'Rodeo',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Travis Scott').id
             }
         ],
         [
@@ -143,16 +143,16 @@ module.exports = new Map(
                 name: 'Birds In The Trap Sing McKnight',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Travis Scott').id
             }
         ],
-        [//A$AP Ferg
+        [//ASAP Ferg
             'Still Striving', {
-                id: 'e964988-440e-4cc7-8832-e34df98fbb17',
+                id: 'e9649888-440e-4cc7-8832-e34df98fbb17',
                 name: 'Still Striving',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('ASAP Ferg').id
             }
         ],
         [
@@ -161,7 +161,7 @@ module.exports = new Map(
                 name: 'Toast To The Gods',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('ASAP Ferg').id
             }
         ],
         [//Drake
@@ -170,7 +170,7 @@ module.exports = new Map(
                 name: 'Views',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Drake').id
             }
         ],
         [
@@ -179,7 +179,7 @@ module.exports = new Map(
                 name: 'More life',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Drake').id
             }
         ],
         [
@@ -188,7 +188,7 @@ module.exports = new Map(
                 name: 'So Far Gone',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Drake').id
             }
         ],
         [//Lil Xan
@@ -197,7 +197,7 @@ module.exports = new Map(
                 name: 'TOTAL XANARCHY',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lil Xan').id
             }
         ],
         [
@@ -206,7 +206,7 @@ module.exports = new Map(
                 name: 'Hot',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Lil Xan').id
             }
         ],
         [//XXXTENTACION
@@ -215,7 +215,7 @@ module.exports = new Map(
                 name: '17',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('XXXTENTACION').id
             }
         ],
         [//21 Savage & XXXTENTACION
@@ -224,7 +224,7 @@ module.exports = new Map(
                 name: '21XXX',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('21 Savage').id
             }
         ],
         [//21 Savage
@@ -233,7 +233,7 @@ module.exports = new Map(
                 name: 'Issa album',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('21 Savage').id
             }
         ],
         [//Migos
@@ -242,7 +242,7 @@ module.exports = new Map(
                 name: 'Culture',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Migos').id
             }
         ],
         [
@@ -251,7 +251,7 @@ module.exports = new Map(
                 name: 'Culture II',
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                artistId: artists.get('Third Artist').id
+                artistId: artists.get('Migos').id
             }
         ]
     ]

@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.Label.fetch({...req.query})
     .then(labels => res.status(200).json(labels))
@@ -16,6 +18,7 @@ router.get('/', [
 
 
 router.get('/:labelId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -29,6 +32,7 @@ router.get('/:labelId', [
 
 
 router.post('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -42,6 +46,7 @@ router.post('/', [
 
 
 router.put('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -55,6 +60,7 @@ router.put('/', [
 
 
 router.delete('/:labelId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);

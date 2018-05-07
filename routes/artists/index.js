@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.Artist.fetch({...req.query})
     .then(artists => res.status(200).json(artists))
@@ -16,6 +18,7 @@ router.get('/', [
 
 
 router.get('/:artistId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -29,6 +32,7 @@ router.get('/:artistId', [
 
 
 router.get('/:artistId/pdf', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -42,6 +46,7 @@ router.get('/:artistId/pdf', [
 
 
 router.get('/:artistId/xml', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -55,6 +60,7 @@ router.get('/:artistId/xml', [
 
 
 router.get('/:artistId/xlsx', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -72,6 +78,7 @@ router.get('/:artistId/xlsx', [
 
 
 router.post('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -85,6 +92,7 @@ router.post('/', [
 
 
 router.put('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -98,6 +106,7 @@ router.put('/', [
 
 
 router.delete('/:artistId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);

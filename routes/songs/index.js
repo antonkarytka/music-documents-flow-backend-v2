@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.Song.fetch({...req.query})
     .then(songs => res.status(200).json(songs))
@@ -16,6 +18,7 @@ router.get('/', [
 
 
 router.get('/top/pdf', [
+  // ensureUser,
   (req, res) => {
     return models.Song.createDocument({generatorType: 'topSongs', documentType: 'pdf'})
     .then(document => res.type('application/pdf').status(200).send(document))
@@ -27,6 +30,7 @@ router.get('/top/pdf', [
 ]);
 
 router.get('/top/xml', [
+  // ensureUser,
   (req, res) => {
     return models.Song.createDocument({generatorType: 'topSongs', documentType: 'xml'})
     .then(document => res.type('application/xml').status(200).send(document))
@@ -39,6 +43,7 @@ router.get('/top/xml', [
 
 
 router.get('/top/xlsx', [
+  // ensureUser,
   (req, res) => {
     return models.Song.createDocument({generatorType: 'topSongs', documentType: 'xlsx'})
     .then(document => {
@@ -55,6 +60,7 @@ router.get('/top/xlsx', [
 
 
 router.get('/:songId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -68,6 +74,7 @@ router.get('/:songId', [
 
 
 router.get('/:songId/pdf', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -80,6 +87,7 @@ router.get('/:songId/pdf', [
 ]);
 
 router.get('/:songId/xml', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -92,6 +100,7 @@ router.get('/:songId/xml', [
 ]);
 
 router.get('/:songId/xlsx', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -110,6 +119,7 @@ router.get('/:songId/xlsx', [
 
 
 router.post('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -123,6 +133,7 @@ router.post('/', [
 
 
 router.put('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -136,6 +147,7 @@ router.put('/', [
 
 
 router.delete('/:songId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);

@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.Album.fetch({...req.query})
     .then(albums => res.status(200).json(albums))
@@ -16,15 +18,20 @@ router.get('/', [
 
 
 router.get('/top/pdf', [
+  // ensureUser,
   (req, res) => {
     return models.Album.createDocument({generatorType: 'topAlbums', documentType: 'pdf'})
     .then(document => res.type('application/pdf').status(200).send(document))
-    .catch(err => res.status(400).json({errors: err }))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({errors: err })
+    })
   }
 ]);
 
 
 router.get('/top/xml', [
+  // ensureUser,
   (req, res) => {
     return models.Album.createDocument({generatorType: 'topAlbums', documentType: 'xml'})
     .then(document => res.type('application/xml').status(200).send(document))
@@ -34,6 +41,7 @@ router.get('/top/xml', [
 ]);
 
 router.get('/top/xlsx', [
+  // ensureUser,
   (req, res) => {
     return models.Album.createDocument({generatorType: 'topAlbums', documentType: 'xlsx'})
     .then(document => {
@@ -48,6 +56,7 @@ router.get('/top/xlsx', [
 
 
 router.get('/:albumId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -61,6 +70,7 @@ router.get('/:albumId', [
 
 
 router.get('/:albumId/pdf', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -74,6 +84,7 @@ router.get('/:albumId/pdf', [
 
 
 router.get('/:albumId/xml', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -87,6 +98,7 @@ router.get('/:albumId/xml', [
 
 
 router.get('/:albumId/xlsx', [
+  // ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -105,6 +117,7 @@ router.get('/:albumId/xlsx', [
 
 
 router.post('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -118,6 +131,7 @@ router.post('/', [
 
 
 router.put('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -130,6 +144,7 @@ router.put('/', [
 ]);
 
 router.delete('/:albumId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);

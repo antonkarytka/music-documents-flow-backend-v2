@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
-var js2xmlparser = require("js2xmlparser");
-var _ = require('lodash');
+const js2xmlparser = require("js2xmlparser");
+const _ = require('lodash');
 
 const models = require('../../../../../index');
 const { sequelize } = models;
@@ -23,7 +23,10 @@ module.exports = (albumId, options = {}) => {
       transaction
     })
     .then(albums => {
-      albums = _.orderBy(albums.data.map(album => ({...album.toJSON(), sales: album.sales[0]})), ['sales.sales'], ['desc']);
+      albums = _.orderBy(
+        albums.data.filter(album => album.sales[0]).map(album => ({...album.toJSON(), sales: album.sales[0]})),
+        ['sales.sales'], ['desc']
+      );
       return new Promise(resolve => resolve(
         js2xmlparser.parse('statistics', createXmlDocument(albums)))
       );

@@ -25,7 +25,7 @@ module.exports = (content, options = {}) => {
     })
     .then(albums => {
       albums = _orderBy(
-        albums.data.map(album => ({...album.toJSON(), sales: album.sales[0]})),
+        albums.data.filter(album => album.sales[0]).map(album => ({...album.toJSON(), sales: album.sales[0]})),
         ['sales.sales'], ['desc']
       ).slice(0, 15);
 
@@ -61,5 +61,5 @@ module.exports = (content, options = {}) => {
 
 
 function generateAlbumName(album) {
-  return `${album.name}: produced by ${album.artist.firstName} ${album.artist.lastName}, sold ${album.sales.sales} times`;
+  return `${album.name}: produced by ${album.artist.firstName} ${album.artist.lastName}, ${album.sales && album.sales.sales ? `sold ${album.sales.sales} times`: `no sales`}.`;
 }

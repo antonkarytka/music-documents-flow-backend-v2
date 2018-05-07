@@ -1,8 +1,6 @@
 const Excel = require('exceljs');
 const {
-  reduce: _reduce,
   orderBy: _orderBy,
-  sum: _sum
 } = require('lodash');
 
 const models = require('../../../../../index');
@@ -33,7 +31,7 @@ module.exports = ({albumId}, options = {}) => {
 
       const workbook = new Excel.Workbook();
       
-      getAlbumsGeneralInfo(workbook, albums.data);
+      getAlbumsGeneralInfo(workbook, albums);
 
       return workbook.xlsx.writeBuffer()
     })
@@ -57,13 +55,18 @@ function getAlbumsGeneralInfo(workbook, albums) {
     bold: true
   };
 
+  albums = _orderBy(
+    albums.data.filter(album => album.sales[0]).map(album => ({...album.toJSON(), sales: album.sales[0]})),
+    ['sales.sales'], ['desc']
+  );
+
   albums.forEach(album => {
     albumsSheet.addRow({
       name: album.name,
       releaseDate: new Date(album.createdAt).toLocaleDateString(),
       artist: `${album.artist.firstName} ${album.artist.lastName}`,
       artistCreatedDate: new Date(album.artist.createdAt).toLocaleDateString(),
-      totalSales: _sum(album.sales.map(sale => sale.sales))
+      totalSales: album.sales.sales
     });
   });
 

@@ -32,12 +32,12 @@ module.exports = (content, options = {}) => {
     .then(songs => {
       songs = _reduce(songs.data, (songs, song) => {
         song = song.toJSON();
-        const { appleMusic, googlePlayMusic, spotify, yandexMusic } = song.listeningStatistics[0];
+        const { appleMusic, googlePlayMusic, spotify, yandexMusic } = song.listeningStatistics[0] || {};
         songs.push({
           ...song,
           listeningStatistics: {
             ...song.listeningStatistics[0],
-            total: appleMusic + googlePlayMusic + spotify + yandexMusic
+            total: appleMusic + googlePlayMusic + spotify + yandexMusic || 0
           }
         });
         return songs;

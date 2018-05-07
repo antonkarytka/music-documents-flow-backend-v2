@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.SongListeningStatistics.fetch({...req.query})
     .then(songListeningStatistics => res.status(200).json(songListeningStatistics))
@@ -16,6 +18,7 @@ router.get('/', [
 
 
 router.get('/songs/:songId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_STATISTICS_BY_SONG_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -29,6 +32,7 @@ router.get('/songs/:songId', [
 
 
 router.get('/songs/:songId/latest', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_STATISTICS_BY_SONG_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -42,6 +46,7 @@ router.get('/songs/:songId/latest', [
 
 
 router.post('/songs', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);

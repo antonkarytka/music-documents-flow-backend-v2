@@ -4,9 +4,10 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
-const { ensureAdmin } = require('../../access-control');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 router.get('/', [
+  ensureAdmin,
   (req, res) => {
     return models.User.fetch({...req.query})
     .then(users => res.status(200).json(users))
@@ -16,6 +17,7 @@ router.get('/', [
 
 
 router.get('/:userId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -69,6 +71,7 @@ router.post('/send-emails', [
 
 
 router.put('/', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -82,6 +85,7 @@ router.put('/', [
 
 
 router.delete('/:userId', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.DELETE_ONE),
   (req, res) => {
     const errors = validationResult(req);

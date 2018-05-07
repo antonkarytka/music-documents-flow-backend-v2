@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 
 const models = require('../models');
 const { sequelize } = models;
-const { ROLE } = require('../models/role/constants');
+const { ROLE: { USER, ADMIN } } = require('../models/role/constants');
 const { validateToken } = require('../helpers/tokens');
 
 
@@ -16,6 +16,7 @@ const validateUserRole = (req, res, next, requiredRole) => {
     .then((user) => {
       return models.Role.findById(user.roleId, {transaction})
       .then((role) => {
+        if (role.name === ADMIN && requiredRole === USER) return next();
         if (role.name !== requiredRole) return Promise.reject(`User doesn't have enough rights for required operation.`);
         return next();
       })
@@ -25,9 +26,9 @@ const validateUserRole = (req, res, next, requiredRole) => {
   });
 };
 
-const ensureUser = (req, res, next) => validateUserRole(req, res, next, ROLE.USER);
+const ensureUser = (req, res, next) => validateUserRole(req, res, next, USER);
 
-const ensureAdmin = (req, res, next) => validateUserRole(req, res, next, ROLE.ADMIN);
+const ensureAdmin = (req, res, next) => validateUserRole(req, res, next, ADMIN);
 
 
 module.exports = {

@@ -4,9 +4,11 @@ const { checkSchema, validationResult } = require('express-validator/check');
 
 const models = require('../../models');
 const VALIDATION_SCHEMAS = require('./validation-schemas');
+const { ensureUser, ensureAdmin } = require('../../access-control');
 
 
 router.get('/', [
+  ensureUser,
   (req, res) => {
     return models.EventLog.fetch({...req.query})
     .then(eventLogs => res.status(200).json(eventLogs))
@@ -16,6 +18,7 @@ router.get('/', [
 
 
 router.get('/:eventLogId', [
+  ensureUser,
   checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
   (req, res) => {
     const errors = validationResult(req);
@@ -27,23 +30,9 @@ router.get('/:eventLogId', [
   }
 ]);
 
-router.get('/:eventLogId/pdf', [
-  checkSchema(VALIDATION_SCHEMAS.FETCH_BY_ID),
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(422).json({ errors: errors.mapped() });
-
-    return models.EventLog.generateDocument({
-      eventLogId: req.params.eventLogId,
-      type: 'pdf'
-    })
-    .then(document => res.status(200).type('application/pdf').send(document))
-    .catch(err => res.status(400).json({errors: err }))
-  }
-]);
-
 
 router.post('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.CREATE_ONE),
   (req, res) => {
     const errors = validationResult(req);
@@ -57,6 +46,7 @@ router.post('/', [
 
 
 router.put('/', [
+  ensureAdmin,
   checkSchema(VALIDATION_SCHEMAS.UPDATE_ONE),
   (req, res) => {
     const errors = validationResult(req);

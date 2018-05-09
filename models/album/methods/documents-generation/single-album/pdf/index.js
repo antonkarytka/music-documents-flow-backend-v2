@@ -5,6 +5,8 @@ const PdfKit = require('pdfkit');
 const models = require('../../../../../index');
 const { sequelize } = models;
 
+const dejaVuSansPath = `public/fonts/DejaVuSans.ttf`;
+
 module.exports = ({albumId}, options = {}) => {
   return sequelize.continueTransaction(options, transaction => {
     return models.Album.fetchById(albumId, {
@@ -37,30 +39,31 @@ module.exports = ({albumId}, options = {}) => {
       const writer = new streams.WritableStream();
       const document = new PdfKit();
       document.pipe(writer);
+      document.registerFont('DejaVuSans', dejaVuSansPath);
 
-      document.font('Helvetica-Bold').fontSize(25).text(`Album info: ${album.name}`, {align: 'center'}).moveDown(1);
+      document.font('DejaVuSans').fontSize(25).text(`Album info: ${album.name}`, {align: 'center'}).moveDown(1);
 
       // Songs
-      document.font('Helvetica-Bold').fontSize(20).text('Songs', {align: 'center'}).moveDown(0.5);
-      document.font('Helvetica').fontSize(20).text('Full list of songs:', {align: 'left'});
-      album.songs.forEach(song => document.font('Helvetica').fontSize(18).text(`- ${generateSongName({song, albumArtist: album.artist})}`, {align: 'left'}));
+      document.font('DejaVuSans').fontSize(20).text('Songs', {align: 'center'}).moveDown(0.5);
+      document.font('DejaVuSans').fontSize(20).text('Full list of songs:', {align: 'left'});
+      album.songs.forEach(song => document.font('DejaVuSans').fontSize(18).text(`- ${generateSongName({song, albumArtist: album.artist})}`, {align: 'left'}));
       document.text().moveDown(2);
 
       // Album Sales
-      document.font('Helvetica-Bold').fontSize(20).text('Sales', {align: 'center'}).moveDown(0.5);
-      album.sales.forEach(sale => document.font('Helvetica').fontSize(18).text(`- ${new Date(sale.createdAt).toLocaleString()}: ${sale.sales}`, {align: 'left'}));
+      document.font('DejaVuSans').fontSize(20).text('Sales', {align: 'center'}).moveDown(0.5);
+      album.sales.forEach(sale => document.font('DejaVuSans').fontSize(18).text(`- ${new Date(sale.createdAt).toLocaleString()}: ${sale.sales}`, {align: 'left'}));
       document.text().moveDown(2);
 
-      document.font('Helvetica').fontSize(18).text(`Date: ${creationDate}`, {align: 'right'}).moveDown(2);
+      document.font('DejaVuSans').fontSize(18).text(`Date: ${creationDate}`, {align: 'right'}).moveDown(2);
 
       document.image(
-        `${process.cwd()}/public/images/ktk-icon.png`,
+        `${process.cwd()}/public/images/ktk-icon.jpg`,
         document.page.width - 222, // image's width + document's margin = 150 + 72
         undefined,
         {fit: [150, 150]}
       );
       document.moveDown(0.3);
-      document.font('Helvetica').fontSize(16).text(`Sincerely yours, KTK team.`, {align: 'right'}).moveDown(1);
+      document.font('DejaVuSans').fontSize(16).text(`Sincerely yours, KTK team.`, {align: 'right'}).moveDown(1);
 
       document.end();
 

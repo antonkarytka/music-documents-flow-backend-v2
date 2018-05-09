@@ -24,6 +24,10 @@ const fetch = (options = {}) => {
       return Promise.map(eventLogs.rows, eventLog => addDetailedInfo(eventLog, {transaction}))
       .then(detailedEventLogs => ({data: detailedEventLogs, total: eventLogs.count}))
     })
+    .then(decoratedEventLogs => ({
+      ...decoratedEventLogs,
+      data: decoratedEventLogs.data.filter(eventLog => Object.keys(eventLog.data).length)
+    }))
   })
 };
 
@@ -49,7 +53,12 @@ function addDetailedInfo(eventLog, options = {}) {
   return sequelize.continueTransaction(options, transaction => {
     return Promise.each(Object.keys(decoratedEventLog.data), key => {
       return DETALIZATION_ITEM[key] && DETALIZATION_ITEM[key].model.fetchById(decoratedEventLog.data[key], {transaction})
-      .then(detailedInfo => Object.assign(decoratedEventLog, {[DETALIZATION_ITEM[key].fieldName]: detailedInfo}))
+      .then(detailedInfo => {
+        // If entry needed for detailed event log has been removed don't
+        // include it in response via filtering event log's data field.
+        if (!detailedInfo) decoratedEventLog.data = {};
+        if (Object.keys(decoratedEventLog.data).length) Object.assign(decoratedEventLog, {[DETALIZATION_ITEM[key].fieldName]: detailedInfo})
+      })
     })
     .then(() => decoratedEventLog)
   })

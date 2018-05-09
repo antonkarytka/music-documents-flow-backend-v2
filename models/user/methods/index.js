@@ -7,6 +7,7 @@ const models = require('../../index');
 const { sequelize } = models;
 const { ROLE: { USER, ADMIN } } = require('../../role/constants');
 const { generateToken } = require('../../../helpers/tokens');
+const interpolate = require('../../../helpers/interpolation');
 
 
 const fetchById = (id, options = {}) => {
@@ -104,11 +105,13 @@ const sendEmails = (content, options = {}) => {
         .then(recipient => {
           if (!recipient) return Promise.resolve();
 
+          const emailContent = parseEmailContent(email.content, recipient);
+
           const mailOptions = {
             from: mailerConfig.user,
             to: recipient.email,
             subject: email.subject,
-            html: email.content
+            html: emailContent
           };
 
           return transporter.sendMail(mailOptions, (err, info) => {
@@ -129,6 +132,14 @@ const deleteOne = (where, content, options = {}) => {
       {where, ...options}
     )
   })
+}
+
+
+function parseEmailContent(content, user) {
+  if (!content) return Promise.reject('Email\'s content must be provided.');
+  if (!user) return Promise.reject('Recipient user must be provided.');
+
+  return interpolate(content, user.toJSON());
 }
 
 

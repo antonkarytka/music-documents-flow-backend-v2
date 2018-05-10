@@ -22,5 +22,10 @@ module.exports = {
     in: ['body'],
     isArray: true,
     errorMessage: 'Artist\'s \'songs\' property is required.'
+  },
+  albums: {
+    in: ['body'],
+    isArray: true,
+    errorMessage: 'Artist\'s \'albums\' property is required.'
   }
 };
